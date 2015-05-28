@@ -43,4 +43,5 @@ func TestBcd(t *testing.T) {
 		t.Error("bcd() should have failed: ")
 	}
 
+	t.Error("Failed test")
 }
