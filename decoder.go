@@ -24,7 +24,7 @@ import (
 	"strconv"
 )
 
-// Extracts all the data from a byte array to an internal IsoMessage
+// DecodeIsoMessage extracts all the data from a byte array to an internal IsoMessage
 func DecodeIsoMessage(data []byte, cfg map[int]IsoFieldConfig) (msg IsoMessage, err error) {
 
 	msg = IsoMessage{}
@@ -32,17 +32,17 @@ func DecodeIsoMessage(data []byte, cfg map[int]IsoFieldConfig) (msg IsoMessage, 
 
 	// Header
 	var header Field
-	header, offset = decodeField(data, offset, cfg[FIELD_HEADER])
+	header, offset = decodeField(data, offset, cfg[FieldHeader])
 	msg.header = header
 
 	// MTI
 	var mti Field
-	mti, offset = decodeField(data, offset, cfg[FIELD_MTI])
+	mti, offset = decodeField(data, offset, cfg[FieldMTI])
 	msg.mti = mti
 
 	// Bitmap(s)
 	var bmp BitmapField
-	bmp, offset, err = decodeBitmap(data, offset, cfg[FIELD_BITMAP])
+	bmp, offset, err = decodeBitmap(data, offset, cfg[FieldBitmap])
 	if err != nil {
 		return
 	}
@@ -61,7 +61,7 @@ func DecodeIsoMessage(data []byte, cfg map[int]IsoFieldConfig) (msg IsoMessage, 
 
 func decodeField(data []byte, offset int, cfg IsoFieldConfig) (f Field, o int) {
 
-	if cfg.Format == FORMAT_ASCII {
+	if cfg.Format == FormatAscii {
 
 		value, newOffset := decodeAsciiField(data, offset, cfg)
 		f = Field{
@@ -70,7 +70,7 @@ func decodeField(data []byte, offset int, cfg IsoFieldConfig) (f Field, o int) {
 		}
 		o = newOffset
 
-	} else if cfg.Format == FORMAT_BCD {
+	} else if cfg.Format == FormatBCD {
 
 		// TODO
 
@@ -97,7 +97,7 @@ func decodeAsciiField(data []byte, offset int, cfg IsoFieldConfig) (s string, o 
 
 func decodeBitmap(data []byte, offset int, cfg IsoFieldConfig) (bmp BitmapField, o int, err error) {
 
-	if cfg.Format == FORMAT_BITMAP_ASCII {
+	if cfg.Format == FormatBitmapASCII {
 
 		value, newOffset := decodeAsciiBitmap(data, offset, cfg)
 
@@ -107,10 +107,10 @@ func decodeBitmap(data []byte, offset int, cfg IsoFieldConfig) (bmp BitmapField,
 		if errTemp == nil {
 			o = newOffset
 		} else {
-			err = errors.New(fmt.Sprintf("Could not decide the Bitmap: ", value))
+			err = errors.New(fmt.Sprintf("Could not decode the Bitmap: %s", value))
 		}
 
-	} else if cfg.Format == FORMAT_BITMAP_BCD {
+	} else if cfg.Format == FormatBitmapBCD {
 
 		// TODO
 
@@ -138,13 +138,13 @@ func decodeAsciiBitmap(data []byte, offset int, cfg IsoFieldConfig) (s string, o
 
 func decodeAsciiLength(data []byte, offset int, cfg IsoFieldConfig) (l int, o int) {
 
-	if cfg.LenFormat == LEN_FIXED {
+	if cfg.LenFormat == LenFixed {
 		l = cfg.Length
 		o = offset
-	} else if cfg.LenFormat == LEN_LLVAR || cfg.LenFormat == LEN_LLLVAR {
+	} else if cfg.LenFormat == LenLLVAR || cfg.LenFormat == LenLLLVAR {
 
 		var lenSize int
-		if cfg.LenFormat == LEN_LLVAR {
+		if cfg.LenFormat == LenLLVAR {
 			lenSize = 2
 		} else {
 			lenSize = 3

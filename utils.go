@@ -53,7 +53,7 @@ func strPadRight(str, pad string, length int) string {
 // BCD format conversion
 func bcd(data string) (b []byte, err error) {
 	if len(data)%2 != 0 {
-		errors.New("Length has to be even")
+		err = errors.New("Length has to be even")
 	}
 	b, err = hex.DecodeString(data)
 
