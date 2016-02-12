@@ -75,29 +75,29 @@ func setupConfigForASCII() (cfg map[int]IsoFieldConfig) {
 
 	cfg = make(map[int]IsoFieldConfig)
 
-	cfg[FieldHeader] = IsoFieldConfig{ID: FieldHeader, Name: "Header", Length: 3, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[FieldMTI] = IsoFieldConfig{ID: FieldMTI, Name: "MTI", Length: 4, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[FieldHeader] = IsoFieldConfig{ID: FieldHeader, Name: "Header", Length: 3, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[FieldMTI] = IsoFieldConfig{ID: FieldMTI, Name: "MTI", Length: 4, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
 	cfg[FieldBitmap] = IsoFieldConfig{ID: FieldBitmap, Name: "Bitmap", Length: 16, Format: FormatBitmapASCII, LenFormat: LenFixed, Padding: PaddingNone}
 
-	cfg[2] = IsoFieldConfig{ID: 2, Name: "Primary account number", Length: 20, Format: FormatAscii, LenFormat: LenLLVAR, Padding: PaddingNone}
-	cfg[3] = IsoFieldConfig{ID: 3, Name: "Processing code", Length: 6, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[4] = IsoFieldConfig{ID: 4, Name: "Amount, transaction", Length: 12, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingLeftWithZero}
-	cfg[7] = IsoFieldConfig{ID: 7, Name: "Transmission date & time", Length: 10, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[11] = IsoFieldConfig{ID: 11, Name: "System trace audit number", Length: 6, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingLeftWithZero}
-	cfg[12] = IsoFieldConfig{ID: 12, Name: "Time, local transaction", Length: 6, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[13] = IsoFieldConfig{ID: 13, Name: "Date, local transaction", Length: 4, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[14] = IsoFieldConfig{ID: 14, Name: "Date, expiration", Length: 4, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[22] = IsoFieldConfig{ID: 22, Name: "Point of service entry mode", Length: 3, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[24] = IsoFieldConfig{ID: 24, Name: "Network International identifier", Length: 3, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[35] = IsoFieldConfig{ID: 35, Name: "Track 2", Length: 37, Format: FormatAscii, LenFormat: LenLLVAR, Padding: PaddingNone}
-	cfg[37] = IsoFieldConfig{ID: 37, Name: "Retrieval reference number", Length: 12, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[39] = IsoFieldConfig{ID: 39, Name: "Response code", Length: 2, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[41] = IsoFieldConfig{ID: 41, Name: "Terminal identification", Length: 8, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[42] = IsoFieldConfig{ID: 42, Name: "Merchant code", Length: 15, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingLeftWithSpace}
-	cfg[45] = IsoFieldConfig{ID: 45, Name: "Track 1", Length: 76, Format: FormatAscii, LenFormat: LenLLVAR, Padding: PaddingNone}
-	cfg[49] = IsoFieldConfig{ID: 49, Name: "Currency code", Length: 3, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[52] = IsoFieldConfig{ID: 52, Name: "PIN block", Length: 16, Format: FormatAscii, LenFormat: LenFixed, Padding: PaddingNone}
-	cfg[70] = IsoFieldConfig{ID: 70, Name: "ISO Reserved", Length: 100, Format: FormatAscii, LenFormat: LenLLLVAR, Padding: PaddingNone}
+	cfg[2] = IsoFieldConfig{ID: 2, Name: "Primary account number", Length: 20, Format: FormatASCII, LenFormat: LenLLVAR, Padding: PaddingNone}
+	cfg[3] = IsoFieldConfig{ID: 3, Name: "Processing code", Length: 6, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[4] = IsoFieldConfig{ID: 4, Name: "Amount, transaction", Length: 12, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingLeftWithZero}
+	cfg[7] = IsoFieldConfig{ID: 7, Name: "Transmission date & time", Length: 10, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[11] = IsoFieldConfig{ID: 11, Name: "System trace audit number", Length: 6, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingLeftWithZero}
+	cfg[12] = IsoFieldConfig{ID: 12, Name: "Time, local transaction", Length: 6, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[13] = IsoFieldConfig{ID: 13, Name: "Date, local transaction", Length: 4, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[14] = IsoFieldConfig{ID: 14, Name: "Date, expiration", Length: 4, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[22] = IsoFieldConfig{ID: 22, Name: "Point of service entry mode", Length: 3, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[24] = IsoFieldConfig{ID: 24, Name: "Network International identifier", Length: 3, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[35] = IsoFieldConfig{ID: 35, Name: "Track 2", Length: 37, Format: FormatASCII, LenFormat: LenLLVAR, Padding: PaddingNone}
+	cfg[37] = IsoFieldConfig{ID: 37, Name: "Retrieval reference number", Length: 12, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[39] = IsoFieldConfig{ID: 39, Name: "Response code", Length: 2, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[41] = IsoFieldConfig{ID: 41, Name: "Terminal identification", Length: 8, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[42] = IsoFieldConfig{ID: 42, Name: "Merchant code", Length: 15, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingLeftWithSpace}
+	cfg[45] = IsoFieldConfig{ID: 45, Name: "Track 1", Length: 76, Format: FormatASCII, LenFormat: LenLLVAR, Padding: PaddingNone}
+	cfg[49] = IsoFieldConfig{ID: 49, Name: "Currency code", Length: 3, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[52] = IsoFieldConfig{ID: 52, Name: "PIN block", Length: 16, Format: FormatASCII, LenFormat: LenFixed, Padding: PaddingNone}
+	cfg[70] = IsoFieldConfig{ID: 70, Name: "ISO Reserved", Length: 100, Format: FormatASCII, LenFormat: LenLLLVAR, Padding: PaddingNone}
 
 	return
 }

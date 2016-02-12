@@ -61,9 +61,9 @@ func DecodeIsoMessage(data []byte, cfg map[int]IsoFieldConfig) (msg IsoMessage, 
 
 func decodeField(data []byte, offset int, cfg IsoFieldConfig) (f Field, o int) {
 
-	if cfg.Format == FormatAscii {
+	if cfg.Format == FormatASCII {
 
-		value, newOffset := decodeAsciiField(data, offset, cfg)
+		value, newOffset := decodeASCIIField(data, offset, cfg)
 		f = Field{
 			ID:    cfg.ID,
 			Value: value,
@@ -81,9 +81,9 @@ func decodeField(data []byte, offset int, cfg IsoFieldConfig) (f Field, o int) {
 	return
 }
 
-func decodeAsciiField(data []byte, offset int, cfg IsoFieldConfig) (s string, o int) {
+func decodeASCIIField(data []byte, offset int, cfg IsoFieldConfig) (s string, o int) {
 
-	l, newOffset := decodeAsciiLength(data, offset, cfg)
+	l, newOffset := decodeASCIILength(data, offset, cfg)
 
 	if len(data) >= newOffset+l {
 		s = string(data[newOffset : newOffset+l])
@@ -99,7 +99,7 @@ func decodeBitmap(data []byte, offset int, cfg IsoFieldConfig) (bmp BitmapField,
 
 	if cfg.Format == FormatBitmapASCII {
 
-		value, newOffset := decodeAsciiBitmap(data, offset, cfg)
+		value, newOffset := decodeASCIIBitmap(data, offset, cfg)
 
 		bmp = BitmapField{}
 		bmp.Value = &Bitmap{}
@@ -121,14 +121,14 @@ func decodeBitmap(data []byte, offset int, cfg IsoFieldConfig) (bmp BitmapField,
 	return
 }
 
-func decodeAsciiBitmap(data []byte, offset int, cfg IsoFieldConfig) (s string, o int) {
+func decodeASCIIBitmap(data []byte, offset int, cfg IsoFieldConfig) (s string, o int) {
 
 	bitmapLen := cfg.Length * 2
 
 	ss := string(data[offset : offset+bitmapLen])
 	dd, _ := hex.DecodeString(ss)
 
-	// TODO: Capturar el error anterior
+	// TODO: Capture previous error
 
 	s = string(hex.EncodeToString(dd))
 	o = offset + bitmapLen
@@ -136,7 +136,7 @@ func decodeAsciiBitmap(data []byte, offset int, cfg IsoFieldConfig) (s string, o
 	return
 }
 
-func decodeAsciiLength(data []byte, offset int, cfg IsoFieldConfig) (l int, o int) {
+func decodeASCIILength(data []byte, offset int, cfg IsoFieldConfig) (l int, o int) {
 
 	if cfg.LenFormat == LenFixed {
 		l = cfg.Length

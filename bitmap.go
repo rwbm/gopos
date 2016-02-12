@@ -22,7 +22,7 @@ import (
 	"strings"
 )
 
-// Represents a ISO8583 Bitmap
+// Bitmap Represents a ISO8583 Bitmap
 type Bitmap struct {
 	data   []byte
 	maxpos int
@@ -39,19 +39,19 @@ func NewBitmap(size int) (b *Bitmap) {
 
 // IsSet checks if a bit is turned on; otherwise returns false
 func (bmp *Bitmap) IsSet(i int) bool {
-	i -= 1
+	i--
 	return bmp.data[i/8]&(1<<uint(7-i%8)) != 0
 }
 
 // Set turns on the indicated bit
 func (bmp *Bitmap) Set(i int) {
-	i -= 1
+	i--
 	bmp.data[i/8] |= 1 << uint(7-i%8)
 }
 
 // UnSet turns off the indicated bit
 func (bmp *Bitmap) UnSet(i int) {
-	i -= 1
+	i--
 	bmp.data[i/8] &^= 1 << uint(7-i%8)
 }
 

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package gopos
 
 import (
@@ -120,7 +121,7 @@ func (msg *IsoMessage) SetMti(value string) {
 }
 
 // DumpXmlF returns a dump of the message's content to a formatted XML
-func (msg *IsoMessage) DumpXmlF() (dump string) {
+func (msg *IsoMessage) DumpXMLWithFormat() (dump string) {
 
 	dump += fmt.Sprintf("<iso mti=\"%s\">\n", msg.mti.Value)
 	dump += fmt.Sprintf("\t<field id=\"%s\">%s</field>\n", "Header", msg.header.Value)
@@ -136,7 +137,7 @@ func (msg *IsoMessage) DumpXmlF() (dump string) {
 }
 
 // DumpXml dumps the content to a one-lined XML
-func (msg *IsoMessage) DumpXml() (dump string) {
+func (msg *IsoMessage) DumpXML() (dump string) {
 
 	dump += fmt.Sprintf("<iso mti=\"%s\">", msg.mti.Value)
 	dump += fmt.Sprintf("<field id=\"%s\">%s</field>", "Header", msg.header.Value)

@@ -47,7 +47,7 @@ func (msg *IsoMessage) EncodeIsoMessage(cfg map[int]IsoFieldConfig) (b []byte) {
 
 func encodeField(value string, cfg IsoFieldConfig) (b []byte) {
 
-	if cfg.Format == FormatAscii {
+	if cfg.Format == FormatASCII {
 
 		b = encodeASCIIField(value, cfg)
 
