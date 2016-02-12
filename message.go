@@ -22,17 +22,18 @@ import (
 	"strconv"
 )
 
-// Represents a Message's field
+// Field represents a normal type message's field
 type Field struct {
 	ID    int
 	Value string
 }
 
+// BitmapField represents a bitmap type message's field
 type BitmapField struct {
 	Value *Bitmap
 }
 
-// IsoMessage
+// IsoMessage represents a ISO8583 message
 type IsoMessage struct {
 	header, mti Field
 	bitmap      BitmapField
@@ -40,7 +41,7 @@ type IsoMessage struct {
 	maxID       int
 }
 
-// Adds a new field to a message
+// AddField adds a new field to a message
 func (msg *IsoMessage) AddField(id int, value string) {
 
 	if msg.HasField(id) {
@@ -53,7 +54,7 @@ func (msg *IsoMessage) AddField(id int, value string) {
 	}
 }
 
-// Checks if a field exists
+// HasField checks if a field exists
 func (msg *IsoMessage) HasField(id int) (b bool) {
 	for i := 0; i < len(msg.fields); i++ {
 		if msg.fields[i].ID == id {
@@ -64,7 +65,7 @@ func (msg *IsoMessage) HasField(id int) (b bool) {
 	return
 }
 
-// Rvemoves a field form the collection
+// RemoveField removes a field form the collection
 func (msg *IsoMessage) RemoveField(id int) (b bool) {
 	for i, f := range msg.fields {
 		if f.ID == id {
@@ -75,7 +76,7 @@ func (msg *IsoMessage) RemoveField(id int) (b bool) {
 	return
 }
 
-// Returns a field from the collection
+// GetField returns a field from the collection
 func (msg *IsoMessage) GetField(id int) (f Field) {
 	for i := 0; i < len(msg.fields); i++ {
 		if msg.fields[i].ID == id {
@@ -86,7 +87,7 @@ func (msg *IsoMessage) GetField(id int) (f Field) {
 	return
 }
 
-// Returns the field's value
+// GetValue returns the field's value
 func (msg *IsoMessage) GetValue(id int) (value string, err error) {
 	f := msg.GetField(id)
 	if f.ID == 0 {
@@ -97,7 +98,7 @@ func (msg *IsoMessage) GetValue(id int) (value string, err error) {
 	return
 }
 
-// Returns the field's value as integer
+// GetInt returns the field's value as integer
 func (msg *IsoMessage) GetInt(id int) (value int, err error) {
 	f := msg.GetField(id)
 	if f.ID == 0 {
@@ -108,17 +109,17 @@ func (msg *IsoMessage) GetInt(id int) (value int, err error) {
 	return
 }
 
-// Set the message's header
+// SetHeader sets the message's header
 func (msg *IsoMessage) SetHeader(value string) {
-	msg.header = Field{ID: FIELD_HEADER, Value: value}
+	msg.header = Field{ID: FieldHeader, Value: value}
 }
 
-// Set the message type
+// SetMti sets the message type
 func (msg *IsoMessage) SetMti(value string) {
-	msg.mti = Field{ID: FIELD_MTI, Value: value}
+	msg.mti = Field{ID: FieldMTI, Value: value}
 }
 
-// Dumps the content to a formatted XML
+// DumpXmlF returns a dump of the message's content to a formatted XML
 func (msg *IsoMessage) DumpXmlF() (dump string) {
 
 	dump += fmt.Sprintf("<iso mti=\"%s\">\n", msg.mti.Value)
@@ -134,7 +135,7 @@ func (msg *IsoMessage) DumpXmlF() (dump string) {
 	return
 }
 
-// Dumps the content to a one-lined XML
+// DumpXml dumps the content to a one-lined XML
 func (msg *IsoMessage) DumpXml() (dump string) {
 
 	dump += fmt.Sprintf("<iso mti=\"%s\">", msg.mti.Value)

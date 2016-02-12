@@ -25,13 +25,13 @@ import (
 
 func TestBitmap(t *testing.T) {
 
-	var b *Bitmap = NewBitmap(16)
+	b := NewBitmap(16)
 	b.Sets(2, 3, 4, 7, 11, 12, 13, 14, 41, 42, 49, 70, 100)
 
 	bStrHex := b.ToHexString()
 	bStrBin1 := b.ToBinaryString()
 
-	var b2 *Bitmap = NewBitmap(16)
+	b2 := NewBitmap(16)
 	b2.FromHex(bStrHex)
 	bStrBin2 := b2.ToBinaryString()
 
@@ -43,7 +43,7 @@ func TestBitmap(t *testing.T) {
 func TestFromHex(t *testing.T) {
 
 	str := "FF00FFZZ44"
-	var b *Bitmap = NewBitmap(16)
+	b := NewBitmap(16)
 
 	err := b.FromHex(str)
 	if err == nil {
@@ -53,7 +53,7 @@ func TestFromHex(t *testing.T) {
 
 func TestToBCD(t *testing.T) {
 
-	var b *Bitmap = NewBitmap(16)
+	b := NewBitmap(16)
 	b.Sets(2, 3, 4, 7, 11, 12, 13, 14, 41, 42, 49, 70, 100)
 	data, err := b.ToBCD()
 

@@ -17,7 +17,7 @@
 
 package gopos
 
-// ISO Field configuration struct. Required to know how to encode/decode a field
+// IsoFieldConfig holds the configuration. Required to know how to encode/decode a field
 type IsoFieldConfig struct {
 	ID        int
 	Name      string

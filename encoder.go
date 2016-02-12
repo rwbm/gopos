@@ -21,18 +21,18 @@ import (
 	"strconv"
 )
 
-// Converts an IsoMessage to its raw representation
+// EncodeIsoMessage converts an IsoMessage to its raw representation
 func (msg *IsoMessage) EncodeIsoMessage(cfg map[int]IsoFieldConfig) (b []byte) {
 
 	// Header
-	header := encodeField(msg.header.Value, cfg[FIELD_HEADER])
+	header := encodeField(msg.header.Value, cfg[FieldHeader])
 
 	// Message Type Indicator
-	mti := encodeField(msg.mti.Value, cfg[FIELD_MTI])
+	mti := encodeField(msg.mti.Value, cfg[FieldMTI])
 
 	// Bitmap
 	refreshBitmap(msg)
-	bitmap := encodeBitmapField(msg.bitmap, cfg[FIELD_BITMAP])
+	bitmap := encodeBitmapField(msg.bitmap, cfg[FieldBitmap])
 
 	// Fields
 	fields := encodeFields(msg.fields, cfg)
@@ -47,11 +47,11 @@ func (msg *IsoMessage) EncodeIsoMessage(cfg map[int]IsoFieldConfig) (b []byte) {
 
 func encodeField(value string, cfg IsoFieldConfig) (b []byte) {
 
-	if cfg.Format == FORMAT_ASCII {
+	if cfg.Format == FormatAscii {
 
-		b = encodeAsciiField(value, cfg)
+		b = encodeASCIIField(value, cfg)
 
-	} else if cfg.Format == FORMAT_BCD {
+	} else if cfg.Format == FormatBCD {
 
 		b = encodeBinaryField(value, cfg)
 
@@ -94,11 +94,11 @@ func refreshBitmap(msg *IsoMessage) {
 
 func encodeBitmapField(bmp BitmapField, cfg IsoFieldConfig) (b []byte) {
 
-	if cfg.Format == FORMAT_BITMAP_ASCII {
+	if cfg.Format == FormatBitmapASCII {
 
 		b = []byte(bmp.Value.ToHexString())
 
-	} else if cfg.Format == FORMAT_BITMAP_BCD {
+	} else if cfg.Format == FormatBitmapBCD {
 
 		data, err := bmp.Value.ToBCD()
 		if err != nil {
@@ -109,19 +109,19 @@ func encodeBitmapField(bmp BitmapField, cfg IsoFieldConfig) (b []byte) {
 	return
 }
 
-func encodeAsciiField(value string, cfg IsoFieldConfig) (b []byte) {
+func encodeASCIIField(value string, cfg IsoFieldConfig) (b []byte) {
 
 	// Field length
-	l := encodeAsciiLength(cfg.LenFormat, len(value))
+	l := encodeASCIILength(cfg.LenFormat, len(value))
 
 	// Field value
 	var v []byte
 
-	if cfg.Padding == PADDING_NONE {
+	if cfg.Padding == PaddingNone {
 		v = []byte(value)
-	} else if cfg.Padding == PADDING_LEFT_WITHF || cfg.Padding == PADDING_LEFT_WITHSPACE || cfg.Padding == PADDING_LEFT_WITHZERO {
+	} else if cfg.Padding == PaddingLeftWithF || cfg.Padding == PaddingLeftWithSpace || cfg.Padding == PaddingLeftWithZero {
 		v = []byte(padLeft(value, cfg.Padding, cfg.Length))
-	} else if cfg.Padding == PADDING_RIGHT_WITHF || cfg.Padding == PADDING_RIGHT_WITHSPACE || cfg.Padding == PADDING_RIGHT_WITHZERO {
+	} else if cfg.Padding == PaddingRightWithF || cfg.Padding == PaddingRightWithSpace || cfg.Padding == PaddingRightWithZero {
 		v = []byte(padRight(value, cfg.Padding, cfg.Length))
 	}
 
@@ -136,10 +136,10 @@ func encodeBinaryField(value string, cfg IsoFieldConfig) (b []byte) {
 	return
 }
 
-func encodeAsciiLength(lenFormat int, lenValue int) (b []byte) {
-	if lenFormat == LEN_LLVAR {
+func encodeASCIILength(lenFormat int, lenValue int) (b []byte) {
+	if lenFormat == LenLLVAR {
 		b = []byte(strPadLeft(strconv.Itoa(lenValue), "0", 2))
-	} else if lenFormat == LEN_LLLVAR {
+	} else if lenFormat == LenLLLVAR {
 		b = []byte(strPadLeft(strconv.Itoa(lenValue), "0", 3))
 	}
 	return
@@ -147,13 +147,13 @@ func encodeAsciiLength(lenFormat int, lenValue int) (b []byte) {
 
 func padLeft(value string, padding int, length int) (s string) {
 
-	var padChar string = " "
+	padChar := " "
 
-	if padding == PADDING_LEFT_WITHF {
+	if padding == PaddingLeftWithF {
 		padChar = "F"
-	} else if padding == PADDING_LEFT_WITHSPACE {
+	} else if padding == PaddingLeftWithSpace {
 		padChar = " "
-	} else if padding == PADDING_LEFT_WITHZERO {
+	} else if padding == PaddingLeftWithZero {
 		padChar = "0"
 	}
 
@@ -163,13 +163,13 @@ func padLeft(value string, padding int, length int) (s string) {
 
 func padRight(value string, padding int, length int) (s string) {
 
-	var padChar string = " "
+	padChar := " "
 
-	if padding == PADDING_RIGHT_WITHF {
+	if padding == PaddingRightWithF {
 		padChar = "F"
-	} else if padding == PADDING_RIGHT_WITHSPACE {
+	} else if padding == PaddingRightWithSpace {
 		padChar = " "
-	} else if padding == PADDING_RIGHT_WITHZERO {
+	} else if padding == PaddingRightWithZero {
 		padChar = "0"
 	}
 

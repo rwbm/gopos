@@ -19,33 +19,33 @@ package gopos
 
 // Field formats
 const (
-	FORMAT_ASCII = 1 + iota
-	FORMAT_BCD
-	FORMAT_BITMAP_ASCII
-	FORMAT_BITMAP_BCD
+	FormatAscii = 1 + iota
+	FormatBCD
+	FormatBitmapASCII
+	FormatBitmapBCD
 )
 
 // Length types
 const (
-	LEN_FIXED = 1 + iota
-	LEN_LLVAR
-	LEN_LLLVAR
+	LenFixed = 1 + iota
+	LenLLVAR
+	LenLLLVAR
 )
 
 // Special fields IDs
 const (
-	FIELD_HEADER = -2
-	FIELD_MTI    = -1
-	FIELD_BITMAP = 1
+	FieldHeader = -2
+	FieldMTI    = -1
+	FieldBitmap = 1
 )
 
 // Padding options
 const (
-	PADDING_NONE = iota
-	PADDING_RIGHT_WITHZERO
-	PADDING_RIGHT_WITHF
-	PADDING_RIGHT_WITHSPACE
-	PADDING_LEFT_WITHZERO
-	PADDING_LEFT_WITHF
-	PADDING_LEFT_WITHSPACE
+	PaddingNone = iota
+	PaddingRightWithZero
+	PaddingRightWithF
+	PaddingRightWithSpace
+	PaddingLeftWithZero
+	PaddingLeftWithF
+	PaddingLeftWithSpace
 )
