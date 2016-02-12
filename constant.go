@@ -19,7 +19,7 @@ package gopos
 
 // Field formats
 const (
-	FormatAscii = 1 + iota
+	FormatASCII = 1 + iota
 	FormatBCD
 	FormatBitmapASCII
 	FormatBitmapBCD
