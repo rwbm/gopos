@@ -19,7 +19,6 @@ package gopos
 
 import (
 	"encoding/hex"
-	"errors"
 	"fmt"
 	"strconv"
 )
@@ -107,7 +106,7 @@ func decodeBitmap(data []byte, offset int, cfg IsoFieldConfig) (bmp BitmapField,
 		if errTemp == nil {
 			o = newOffset
 		} else {
-			err = errors.New(fmt.Sprintf("Could not decode the Bitmap: %s", value))
+			err = fmt.Errorf("Could not decode the Bitmap: %s", value)
 		}
 
 	} else if cfg.Format == FormatBitmapBCD {

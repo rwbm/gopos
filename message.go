@@ -110,17 +110,23 @@ func (msg *IsoMessage) GetInt(id int) (value int, err error) {
 	return
 }
 
+// GetMTI returns the current MTI value, if set
+func (msg *IsoMessage) GetMTI() (value string, err error) {
+	value, err = msg.GetValue(FieldMTI)
+	return
+}
+
 // SetHeader sets the message's header
 func (msg *IsoMessage) SetHeader(value string) {
 	msg.header = Field{ID: FieldHeader, Value: value}
 }
 
-// SetMti sets the message type
-func (msg *IsoMessage) SetMti(value string) {
+// SetMTI sets the message type
+func (msg *IsoMessage) SetMTI(value string) {
 	msg.mti = Field{ID: FieldMTI, Value: value}
 }
 
-// DumpXmlF returns a dump of the message's content to a formatted XML
+// DumpXMLWithFormat returns a dump of the message's content to a formatted XML
 func (msg *IsoMessage) DumpXMLWithFormat() (dump string) {
 
 	dump += fmt.Sprintf("<iso mti=\"%s\">\n", msg.mti.Value)
@@ -136,7 +142,7 @@ func (msg *IsoMessage) DumpXMLWithFormat() (dump string) {
 	return
 }
 
-// DumpXml dumps the content to a one-lined XML
+// DumpXML dumps the content to a one-lined XML
 func (msg *IsoMessage) DumpXML() (dump string) {
 
 	dump += fmt.Sprintf("<iso mti=\"%s\">", msg.mti.Value)
