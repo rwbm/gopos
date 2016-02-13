@@ -37,7 +37,7 @@ func strPadLeft(str, pad string, length int) string {
 }
 
 // Right padding
-func strPadRight(str, pad string, length int) string {
+func strPadRight(str string, pad string, length int) string {
 	if len(str) < length {
 		for {
 			str += pad

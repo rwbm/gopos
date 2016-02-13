@@ -56,20 +56,36 @@ func TestMessages(t *testing.T) {
 		t.Errorf("Wrong value for Field 11: %s", stanStr)
 	}
 
+	// Add a field that already exists
+	if msg.HasField(11) {
+		msg.AddField(11, "987654")
+		newStan, err := msg.GetValue(11)
+		if err != nil || newStan != "987654" {
+			t.Errorf("Wrong value for Field 11: %s", newStan)
+		}
+	} else {
+		t.Error("HasField() failed: field 11 is present")
+	}
+
 	// Remove field
 	msg.RemoveField(7)
 	if msg.HasField(7) {
 		t.Error("Field 11 wasn't removed")
 	}
 
+	// Remove wrong field
+	if msg.RemoveField(15) {
+		t.Error("RemoveField() failed removing a field that doesn't exist")
+	}
+
 	// Get value as int
 	stanInt, err := msg.GetInt(11)
-	if err != nil || stanInt != 123456 {
+	if err != nil || stanInt != 987654 {
 		t.Errorf("Wrong value for Field 11: %d", stanInt)
 	}
 
 	xmlDump := msg.DumpXML()
-	if xmlDump != "<iso mti=\"0800\"><field id=\"Header\">ISO</field><field id=\"11\">123456</field></iso>" {
+	if xmlDump != "<iso mti=\"0800\"><field id=\"Header\">ISO</field><field id=\"11\">987654</field></iso>" {
 		t.Errorf("XML Dump is wrong: %s", xmlDump)
 	}
 

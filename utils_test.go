@@ -40,6 +40,31 @@ func TestBcd(t *testing.T) {
 	strNotEven := "80FFA256AE1"
 	_, err2 := bcd(strNotEven)
 	if err2 == nil {
-		t.Error("bcd() should have failed: ")
+		t.Error("bcd() should have failed because hex string is not complete")
 	}
+}
+
+func TestPadding(t *testing.T) {
+
+	str2Pad := "String to pad"
+	strPaddedRight := strPadRight(str2Pad, " ", 20)
+	if strPaddedRight != "String to pad       " {
+		t.Errorf("strPadRight() result is wrong: %s", strPaddedRight)
+	}
+
+	strPaddedRightTruncated := strPadRight(str2Pad, " ", 10)
+	if strPaddedRightTruncated != "String to " {
+		t.Errorf("strPadRight() result is wrong: %s", strPaddedRightTruncated)
+	}
+
+	strPaddedLeft := strPadLeft(str2Pad, " ", 20)
+	if strPaddedLeft != "       String to pad" {
+		t.Errorf("strPadLeft() result is wrong: %s", strPaddedLeft)
+	}
+
+	strPaddedLeftTruncated := strPadLeft(str2Pad, " ", 10)
+	if strPaddedLeftTruncated != "String to " {
+		t.Errorf("strPadLeft() result is wrong: %s", strPaddedLeftTruncated)
+	}
+
 }

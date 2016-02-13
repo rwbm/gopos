@@ -78,33 +78,35 @@ func (msg *IsoMessage) RemoveField(id int) (b bool) {
 }
 
 // GetField returns a field from the collection
-func (msg *IsoMessage) GetField(id int) (f Field) {
+func (msg *IsoMessage) GetField(id int) (f Field, err error) {
 	for i := 0; i < len(msg.fields); i++ {
 		if msg.fields[i].ID == id {
 			f = msg.fields[i]
-			return
+			break
 		}
 	}
+
+	if f.ID == 0 {
+		err = errors.New("Field not found")
+	}
+
 	return
 }
 
 // GetValue returns the field's value
 func (msg *IsoMessage) GetValue(id int) (value string, err error) {
-	f := msg.GetField(id)
-	if f.ID == 0 {
-		err = errors.New("Field not found")
-	} else {
+	f, err := msg.GetField(id)
+	if err == nil {
 		value = f.Value
 	}
+
 	return
 }
 
 // GetInt returns the field's value as integer
 func (msg *IsoMessage) GetInt(id int) (value int, err error) {
-	f := msg.GetField(id)
-	if f.ID == 0 {
-		err = errors.New("Field not found")
-	} else {
+	f, err := msg.GetField(id)
+	if err == nil {
 		value, err = strconv.Atoi(f.Value)
 	}
 	return
