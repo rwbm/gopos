@@ -115,17 +115,20 @@ func (msg *IsoMessage) SetHeader(value string) {
 	msg.header = Field{ID: FieldHeader, Value: value}
 }
 
-// SetMti sets the message type
-func (msg *IsoMessage) SetMti(value string) {
+// SetMTI sets the message type
+func (msg *IsoMessage) SetMTI(value string) {
 	msg.mti = Field{ID: FieldMTI, Value: value}
 }
 
-// DumpXmlF returns a dump of the message's content to a formatted XML
+// DumpXMLWithFormat returns a dump of the message's content to a formatted XML
 func (msg *IsoMessage) DumpXMLWithFormat() (dump string) {
 
 	dump += fmt.Sprintf("<iso mti=\"%s\">\n", msg.mti.Value)
 	dump += fmt.Sprintf("\t<field id=\"%s\">%s</field>\n", "Header", msg.header.Value)
-	dump += fmt.Sprintf("\t<field id=\"%s\">%s</field>\n", "Bitmaps", msg.bitmap.Value.ToHexString())
+
+	if msg.bitmap.Value != nil {
+		dump += fmt.Sprintf("\t<field id=\"%s\">%s</field>\n", "Bitmaps", msg.bitmap.Value.ToHexString())
+	}
 
 	for i := 1; i < len(msg.fields); i++ {
 		dump += fmt.Sprintf("\t<field id=\"%d\">%s</field>\n", msg.fields[i].ID, msg.fields[i].Value)
@@ -136,12 +139,15 @@ func (msg *IsoMessage) DumpXMLWithFormat() (dump string) {
 	return
 }
 
-// DumpXml dumps the content to a one-lined XML
+// DumpXML dumps the content to a one-lined XML
 func (msg *IsoMessage) DumpXML() (dump string) {
 
 	dump += fmt.Sprintf("<iso mti=\"%s\">", msg.mti.Value)
 	dump += fmt.Sprintf("<field id=\"%s\">%s</field>", "Header", msg.header.Value)
-	dump += fmt.Sprintf("<field id=\"%s\">%s</field>", "Bitmaps", msg.bitmap.Value.ToHexString())
+
+	if msg.bitmap.Value != nil {
+		dump += fmt.Sprintf("<field id=\"%s\">%s</field>", "Bitmaps", msg.bitmap.Value.ToHexString())
+	}
 
 	for i := 1; i < len(msg.fields); i++ {
 		dump += fmt.Sprintf("<field id=\"%d\">%s</field>", msg.fields[i].ID, msg.fields[i].Value)

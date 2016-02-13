@@ -47,7 +47,7 @@ func TestEncodeASCII(t *testing.T) {
 
 	msg := IsoMessage{}
 	msg.SetHeader("ISO")
-	msg.SetMti("0200")
+	msg.SetMTI("0200")
 	msg.AddField(2, "4444333322221111")
 	msg.AddField(3, "000000")
 	msg.AddField(4, "10000")
