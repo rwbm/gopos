@@ -110,12 +110,6 @@ func (msg *IsoMessage) GetInt(id int) (value int, err error) {
 	return
 }
 
-// GetMTI returns the current MTI value, if set
-func (msg *IsoMessage) GetMTI() (value string, err error) {
-	value, err = msg.GetValue(FieldMTI)
-	return
-}
-
 // SetHeader sets the message's header
 func (msg *IsoMessage) SetHeader(value string) {
 	msg.header = Field{ID: FieldHeader, Value: value}
@@ -131,7 +125,10 @@ func (msg *IsoMessage) DumpXMLWithFormat() (dump string) {
 
 	dump += fmt.Sprintf("<iso mti=\"%s\">\n", msg.mti.Value)
 	dump += fmt.Sprintf("\t<field id=\"%s\">%s</field>\n", "Header", msg.header.Value)
-	dump += fmt.Sprintf("\t<field id=\"%s\">%s</field>\n", "Bitmaps", msg.bitmap.Value.ToHexString())
+
+	if msg.bitmap.Value != nil {
+		dump += fmt.Sprintf("\t<field id=\"%s\">%s</field>\n", "Bitmaps", msg.bitmap.Value.ToHexString())
+	}
 
 	for i := 1; i < len(msg.fields); i++ {
 		dump += fmt.Sprintf("\t<field id=\"%d\">%s</field>\n", msg.fields[i].ID, msg.fields[i].Value)
@@ -147,7 +144,10 @@ func (msg *IsoMessage) DumpXML() (dump string) {
 
 	dump += fmt.Sprintf("<iso mti=\"%s\">", msg.mti.Value)
 	dump += fmt.Sprintf("<field id=\"%s\">%s</field>", "Header", msg.header.Value)
-	dump += fmt.Sprintf("<field id=\"%s\">%s</field>", "Bitmaps", msg.bitmap.Value.ToHexString())
+
+	if msg.bitmap.Value != nil {
+		dump += fmt.Sprintf("<field id=\"%s\">%s</field>", "Bitmaps", msg.bitmap.Value.ToHexString())
+	}
 
 	for i := 1; i < len(msg.fields); i++ {
 		dump += fmt.Sprintf("<field id=\"%d\">%s</field>", msg.fields[i].ID, msg.fields[i].Value)
