@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/robertcs/gopos.png)](https://travis-ci.org/robertcs/gopos)
-[![Coverage Status](https://coveralls.io/repos/github/robertcs/gopos/badge.svg?branch=feature/doc-example)](https://coveralls.io/github/robertcs/gopos?branch=feature/doc-example)
+[![Coverage Status](https://coveralls.io/repos/github/robertcs/gopos/badge.svg?branch=master)](https://coveralls.io/github/robertcs/gopos?branch=master)
 [![Code Report](https://goreportcard.com/badge/github.com/robertcs/gopos)](https://goreportcard.com/report/github.com/robertcs/gopos)
 [![GoDoc](https://godoc.org/github.com/robertcs/gopos?status.svg)](http://godoc.org/github.com/robertcs/gopos)
 
